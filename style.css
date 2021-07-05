@@ -99,3 +99,14 @@ p {
 
 /* End of Instructions */
 
+.upArrow {
+    content: url("./images/up.png");
+    max-height: 5vh;
+    max-width: 5vh;
+}
+
+.downArrow {
+    content: url("./images/down.png");
+    max-height: 5vh;
+    max-width: 5vh;
+}

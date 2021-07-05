@@ -12,6 +12,7 @@ const ROWS = 3;
 const COLUMNS = 6;
 
 let tileArray = new Array(ROWS);
+let arrowTrackArray = new Array();
 
 initializeGame();
 
@@ -70,6 +71,7 @@ function addArrowClickEvents() {
                 $(tileArray[rowIdx][i]).css('background-color', $(tileArray[rowIdx][i + 1]).css('background-color'));
             }
             $(tileArray[rowIdx][5]).css('background-color', temp);
+            appendArrowImages();
         });
 
         // Right arrow rotation.
@@ -79,6 +81,7 @@ function addArrowClickEvents() {
                 $(tileArray[rowIdx][i]).css('background-color', $(tileArray[rowIdx][i - 1]).css('background-color'));
             }
             $(tileArray[rowIdx][0]).css('background-color', temp);
+            appendArrowImages();
         });
     }
 }
@@ -110,10 +113,39 @@ function addVerticalClickSwap() {
                     swapTiles(1, idx - 12, 2, idx - 12);
                 }
             }
+            appendArrowImages();
         })
     })
 }
 
 
-// console.log(($('#blocks').children(6)).css('background-color'));
-// // console.log(($('#blocks')).children());
+function appendArrowImages() {
+    let flatTileArray = _.flatten(tileArray);
+
+    arrowTrackArray.forEach( function(div) {
+        div.removeClass('upArrow');
+        div.removeClass('downArrow');
+    })
+
+    $('#blocks').children().each( (idx, div) => {
+        console.log(arrowTrackArray);
+        if ($(div).css('background-color') == "rgba(0, 0, 0, 0)" || $(div).css('background-color') == "transparent") {
+            if (idx >= 0 && idx < 6) {
+                $(flatTileArray[idx + 6]).addClass('upArrow');
+                arrowTrackArray.push($(flatTileArray[idx + 6]));
+            } else if (idx >= 12) {
+                $(flatTileArray[idx - 6]).addClass('downArrow');
+                arrowTrackArray.push($(flatTileArray[idx - 6]));
+            } else if (idx >= 6 && idx < 12) {
+                $(flatTileArray[idx - 6]).addClass('downArrow');
+                $(flatTileArray[idx + 6]).addClass('upArrow');
+                arrowTrackArray.push($(flatTileArray[idx + 6]));
+                arrowTrackArray.push($(flatTileArray[idx - 6]));
+            }
+        } 
+    })
+}
+
+
+// $(tileArray[0][0]).removeClass(upArrow);
+appendArrowImages();
