@@ -1,0 +1,101 @@
+.mainContainer {
+    background-color: blanchedalmond;
+    height: 100%;
+    display: grid;
+    grid-template-columns: .5fr 2fr .5fr;
+    grid-template-rows: .25fr 1.75fr;
+    grid-template-areas:  
+    "leftWrapper header rightWrapper"
+    "leftWrapper gameContainer rightWrapper"
+    "leftWrapper instructionsContainer rightWrapper";
+}
+
+#leftWrapper {
+    grid-area: leftWrapper;
+}
+
+#rightWrapper {
+    grid-area: rightWrapper;
+}
+
+#header {
+    grid-area: header;
+    font-family: 'Lobster', 'Times New Roman';
+    font-size: 7vh;
+    text-align: center;
+}
+
+/* Game Container */ 
+
+#gameContainer {
+    grid-area: gameContainer;
+    display: grid;
+    grid-template-columns: .25fr 1fr .25fr;
+    grid-template-areas: 
+    "leftArrows blocks rightArrows" 
+}
+
+#blocks {
+    display: grid;
+    grid-area: blocks;
+    margin: -10px;
+    padding-top: 6vh;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+/* Inner Arrow Grids */
+
+#leftArrows {
+    grid-area: leftArrows;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas: 
+    "leftArrow1"
+    "leftArrow2"
+    "leftArrow3";
+    padding-top: 20px;
+}
+
+.leftArrow {
+    content: url("./images/left.png");
+    max-height: 18vh;
+}
+
+#rightArrows {
+    grid-area: rightArrows;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas: 
+    "rightArrow1"
+    "rightArrow2"
+    "rightArrow3";
+    padding-top: 20px;
+}
+
+.rightArrow {
+    content: url("./images/right.png");
+    max-height: 18vh;
+}
+
+/* End Inner Arrow Grids */
+
+/* Instructions */
+
+#instructionsTitle {
+    font-family: 'Lobster', 'Times New Roman';
+    font-size: 7vh;
+    text-align: center;
+    margin-bottom: 0%;
+}
+
+p {
+    font-family: 'Lobster', 'Times New Roman';
+    font-size: 2vh;
+    text-align: center;
+}
+
+/* End of Instructions */
+
