@@ -15,6 +15,7 @@ let tileArray = new Array(ROWS);
 let arrowTrackArray = new Array();
 
 initializeGame();
+appendArrowImages();
 
 function createGameTile(colour) {
     let newTile = document.createElement("div");
@@ -72,6 +73,7 @@ function addArrowClickEvents() {
             }
             $(tileArray[rowIdx][5]).css('background-color', temp);
             appendArrowImages();
+            winCheck();
         });
 
         // Right arrow rotation.
@@ -82,6 +84,7 @@ function addArrowClickEvents() {
             }
             $(tileArray[rowIdx][0]).css('background-color', temp);
             appendArrowImages();
+            winCheck();
         });
     }
 }
@@ -114,6 +117,7 @@ function addVerticalClickSwap() {
                 }
             }
             appendArrowImages();
+            winCheck();            
         })
     })
 }
@@ -123,12 +127,13 @@ function appendArrowImages() {
     let flatTileArray = _.flatten(tileArray);
 
     arrowTrackArray.forEach( function(div) {
+        // Remove previous valid arrows.
         div.removeClass('upArrow');
         div.removeClass('downArrow');
     })
 
     $('#blocks').children().each( (idx, div) => {
-        console.log(arrowTrackArray);
+        // If a transparent tile is found, append directional arrows to valid vertical moves.
         if ($(div).css('background-color') == "rgba(0, 0, 0, 0)" || $(div).css('background-color') == "transparent") {
             if (idx >= 0 && idx < 6) {
                 $(flatTileArray[idx + 6]).addClass('upArrow');
@@ -146,6 +151,16 @@ function appendArrowImages() {
     })
 }
 
+function winCheck() {
+    for (colIdx = 0; colIdx < COLUMNS; colIdx++) {
+        let compare = $(tileArray[2][colIdx]).css('background-color');
+        console.log(compare);
+        if (($(tileArray[0][colIdx]).css('background-color') == compare && $(tileArray[1][colIdx]).css('background-color') == compare) || (compare = 'rgba(0, 0, 0, 0)' && $(tileArray[0][colIdx]).css('background-color') == 'rgb(211, 211, 211)' && $(tileArray[1][colIdx]).css('background-color') == 'rgb(211, 211, 211)')) {
+            continue;
+        } else {
+            return;
+        }
+    }
+    $("#winText").fadeIn(500);
+}
 
-// $(tileArray[0][0]).removeClass(upArrow);
-appendArrowImages();

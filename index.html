@@ -31,7 +31,7 @@
                 <div id="rightArrow2" class="rightArrow"></div>
             </div>
         </div>
-
+        <div id="winText">Congratulations, you've completed the puzzle!</div>
         <div id="instructionsContainer">
             <p id="instructionsTitle">Instructions</p>
                 <p>1. Align the columns with three of the same colour tiles.</p>
@@ -44,4 +44,7 @@
 
 </body>
 <script src="blockToyV2.js"></script>
+<script> $(document).ready( function() {
+    $("#winText").hide();
+}) </script>
 </html>
