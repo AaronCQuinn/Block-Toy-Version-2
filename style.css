@@ -7,6 +7,7 @@
     grid-template-areas:  
     "leftWrapper header rightWrapper"
     "leftWrapper gameContainer rightWrapper"
+    "leftWrapper stopwatch rightWrapper"
     "leftWrapper winText rightWrapper"
     "leftWrapper instructionsContainer rightWrapper";
 }
@@ -28,6 +29,13 @@
 
 #winText {
     grid-area: winText;
+    font-family: 'Lobster', 'Times New Roman';
+    font-size: 5vh;
+    text-align: center;
+}
+
+#stopwatch {
+    grid-area: stopwatch;
     font-family: 'Lobster', 'Times New Roman';
     font-size: 5vh;
     text-align: center;

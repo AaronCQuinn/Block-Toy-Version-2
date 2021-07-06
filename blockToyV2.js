@@ -11,8 +11,17 @@ const TILE_DIMENSION = 13 + "vh";
 const ROWS = 3;
 const COLUMNS = 6;
 
+
+let sec = 0;
+let min = 0;
+let hour = 0;
+let startTime;
+let elapsedTime = 0;
+let timeInterval;
+
 let tileArray = new Array(ROWS);
 let arrowTrackArray = new Array();
+let stopwatchStatus = false;
 
 initializeGame();
 appendArrowImages();
@@ -74,6 +83,10 @@ function addArrowClickEvents() {
             $(tileArray[rowIdx][5]).css('background-color', temp);
             appendArrowImages();
             winCheck();
+            if (stopwatchStatus == false && min == 0 && sec == 0 & hour == 0) {
+                stopwatchStatus = true;
+                startTimer();
+            };
         });
 
         // Right arrow rotation.
@@ -85,6 +98,10 @@ function addArrowClickEvents() {
             $(tileArray[rowIdx][0]).css('background-color', temp);
             appendArrowImages();
             winCheck();
+            if (stopwatchStatus == false && min == 0 && sec == 0 & hour == 0) {
+                stopwatchStatus = true;
+                startTimer();
+            };
         });
     }
 }
@@ -117,7 +134,11 @@ function addVerticalClickSwap() {
                 }
             }
             appendArrowImages();
-            winCheck();            
+            winCheck();
+            if (stopwatchStatus == false && min == 0 && sec == 0 & hour == 0) {
+                stopwatchStatus = true;
+                startTimer();
+            };   
         })
     })
 }
@@ -153,14 +174,66 @@ function appendArrowImages() {
 
 function winCheck() {
     for (colIdx = 0; colIdx < COLUMNS; colIdx++) {
+        // Compare each of the bottom row tiles, as the transparent tile must also being the bottom on completion.
         let compare = $(tileArray[2][colIdx]).css('background-color');
-        console.log(compare);
-        if (($(tileArray[0][colIdx]).css('background-color') == compare && $(tileArray[1][colIdx]).css('background-color') == compare) || (compare = 'rgba(0, 0, 0, 0)' && $(tileArray[0][colIdx]).css('background-color') == 'rgb(211, 211, 211)' && $(tileArray[1][colIdx]).css('background-color') == 'rgb(211, 211, 211)')) {
+        
+        // If each last row tile is the same as the ones above it.
+        if (($(tileArray[0][colIdx]).css('background-color') == compare && $(tileArray[1][colIdx]).css('background-color') == compare) 
+        
+        // If the tile is transparent, are the two above it light grey.
+        || (compare = 'rgba(0, 0, 0, 0)' && $(tileArray[0][colIdx]).css('background-color') == 'rgb(211, 211, 211)' && $(tileArray[1][colIdx]).css('background-color') == 'rgb(211, 211, 211)')) {
             continue;
         } else {
+
+            // If the conditions aren't met, exits the loop and no win events are executed.
             return;
         }
     }
+    stopTime();
     $("#winText").fadeIn(500);
+    stopClickEvents();
 }
 
+// Used the timer I made from the previous project as I felt the way it is implemented is sufficient.
+function updateTime(elapsedTime) {
+    let diffInHours = elapsedTime / 3600000;
+    let hrText = Math.floor(diffInHours);
+
+    let diffInMin = (diffInHours - hrText) * 60;
+    let minText = Math.floor(diffInMin);
+
+    let diffInSec = (diffInMin - minText) * 60;
+    let secText = Math.floor(diffInSec);
+
+    hrText = hrText.toString().padStart(2, "0");
+    minText = minText.toString().padStart(2, "0");
+    secText = secText.toString().padStart(2, "0");
+
+    $("#stopwatch").html(hrText + ":" + minText + ":" + secText);
+}
+
+function startTimer() {
+    if (stopwatchStatus == true);
+        startTime = Date.now() - elapsedTime;
+        timeInterval = setInterval(function printTime() {
+            elapsedTime = Date.now() - startTime;
+            updateTime(elapsedTime);
+        }, 1000);
+}
+
+function stopTime() {
+    stopwatchStatus == false;
+    clearInterval(timeInterval);
+}
+
+// Used this function from the previous project as well as I believe it's suitable as-is.
+function stopClickEvents() {
+    for (rowIdx = 0; rowIdx < ROWS; rowIdx++) {
+        $("#lArrow" + rowIdx).off();
+        $("#rArrow" + rowIdx).off();
+        for (let colIdx = 0; colIdx < COLUMNS; colIdx++) {
+            $(squareArray[rowIdx][colIdx]).off();
+            $(squareArray[rowIdx][colIdx]).off();
+        }
+    }
+};
