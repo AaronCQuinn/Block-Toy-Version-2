@@ -1,5 +1,9 @@
+body {
+    margin: 0;
+    background-color:honeydew;
+}
+
 .mainContainer {
-    background-color: blanchedalmond;
     height: 100%;
     display: grid;
     grid-template-columns: .5fr 2fr .5fr;
@@ -37,8 +41,9 @@
 #stopwatch {
     grid-area: stopwatch;
     font-family: 'Lobster', 'Times New Roman';
-    font-size: 5vh;
+    font-size: 7vh;
     text-align: center;
+    user-select: none;
 }
 
 /* Game Container */ 
@@ -105,12 +110,14 @@
     font-size: 7vh;
     text-align: center;
     margin-bottom: 0%;
+    user-select: none;
 }
 
 p {
     font-family: 'Lobster', 'Times New Roman';
     font-size: 2vh;
     text-align: center;
+    user-select: none;
 }
 
 /* End of Instructions */

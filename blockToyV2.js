@@ -11,7 +11,6 @@ const TILE_DIMENSION = 13 + "vh";
 const ROWS = 3;
 const COLUMNS = 6;
 
-
 let sec = 0;
 let min = 0;
 let hour = 0;
@@ -24,7 +23,6 @@ let arrowTrackArray = new Array();
 let stopwatchStatus = false;
 
 initializeGame();
-appendArrowImages();
 
 function createGameTile(colour) {
     let newTile = document.createElement("div");
@@ -49,17 +47,31 @@ function initializeGame() {
 
     // Shuffle the board before appending.
 
-
     // Append game tiles to DOM.
     $(tileArray).each( function(idx) {
         $('#blocks').append(tileArray[idx]);
     });
 
+    scrambleBoard();
 
+    // Add arrow events to rotate board.
     addArrowClickEvents();
     // Add vertical moving to tiles.
     addVerticalClickSwap();
+    // Add valid vertical move arrows.
+    appendArrowImages();
 };
+
+function scrambleBoard() {
+    let colorArray = [];
+    $('#blocks').children().each( (idx, div) => {
+        colorArray.push($(div).css("background-color"));
+    });
+    colorArray = _.shuffle(colorArray);
+    $('#blocks').children().each( (idx, div) => {
+        $(div).css("background-color", colorArray[idx]);
+    });
+}
 
 function swapTiles(x1, x2, y1, y2) {
     // At this time I can't find a solution to swapping two entire divs vertically as they are not adjacent, and are already appended into the DOM. When I figure out a solution I'll return and refactor.
